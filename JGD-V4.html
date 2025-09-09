@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Guru Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .btn-primary { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+        .btn-primary:hover { background: linear-gradient(135deg, #1D4ED8, #1E40AF); }
+        .status-hadir { background: #10B981; }
+        .status-izin { background: #F59E0B; }
+        .status-sakit { background: #EF4444; }
+        .status-alpa { background: #6B7280; }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Header Desktop -->
+    <header class="bg-white shadow-sm border-b border-gray-200 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img id="logo-sekolah" src="" alt="Logo" class="h-12 w-12 rounded-lg">
+                    <div>
+                        <h1 id="nama-aplikasi" class="text-xl font-bold text-gray-900">Jurnal Guru Digital</h1>
+                        <p id="nama-sekolah" class="text-sm text-gray-600">SMK DR. SOETOMO SURABAYA</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <nav class="flex space-x-6">
+                        <button onclick="showSection('dashboard')" class="nav-btn text-blue-600 border-b-2 border-blue-600 pb-2 px-1 font-medium">
+                            <i class="fas fa-home mr-2"></i>Dashboard
+                        </button>
+                        <button onclick="showSection('absensi')" class="nav-btn text-gray-600 hover:text-blue-600 pb-2 px-1 font-medium transition-colors">
+                            <i class="fas fa-user-check mr-2"></i>Absensi
+                        </button>
+                        <button onclick="showSection('nilai')" class="nav-btn text-gray-600 hover:text-blue-600 pb-2 px-1 font-medium transition-colors">
+                            <i class="fas fa-star mr-2"></i>Nilai
+                        </button>
+                        <button onclick="showSection('jurnal')" class="nav-btn text-gray-600 hover:text-blue-600 pb-2 px-1 font-medium transition-colors">
+                            <i class="fas fa-book mr-2"></i>Jurnal
+                        </button>
+                        <button onclick="showSection('laporan')" class="nav-btn text-gray-600 hover:text-blue-600 pb-2 px-1 font-medium transition-colors">
+                            <i class="fas fa-chart-bar mr-2"></i>Laporan
+                        </button>
+                    </nav>
+                    <div class="flex items-center space-x-3">
+                        <img id="foto-guru" src="" alt="Foto Guru" class="h-10 w-10 rounded-full border-2 border-blue-200">
+                        <div class="text-right">
+                            <p id="nama-guru" class="text-sm font-medium text-gray-900">ARI WIJAYA</p>
+                            <p id="nama-mapel" class="text-xs text-gray-600">KKA, DGA, TATA ARTISTIK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header Mobile -->
+    <header class="bg-white shadow-sm border-b border-gray-200 md:hidden">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img id="logo-sekolah-mobile" src="" alt="Logo" class="h-10 w-10 rounded-lg">
+                    <div>
+                        <h1 id="nama-aplikasi-mobile" class="text-lg font-bold text-gray-900">Jurnal Guru Digital</h1>
+                        <p id="nama-sekolah-mobile" class="text-xs text-gray-600">SMK DR. SOETOMO SURABAYA</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <img id="foto-guru-mobile" src="" alt="Foto Guru" class="h-8 w-8 rounded-full border border-blue-200">
+                    <div class="text-right">
+                        <p id="nama-guru-mobile" class="text-xs font-medium text-gray-900">ARI WIJAYA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-20 md:pb-6">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="fade-in">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Dashboard</h2>
+                <p class="text-gray-600">Selamat datang di Jurnal Guru Digital</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center ">
+                        <div class="p-3 rounded-full bg-blue-100">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Siswa</p>
+                            <p id="total-siswa" class="text-2xl font-bold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center ">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <i class="fas fa-user-check text-green-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Hadir Hari Ini</p>
+                            <p id="hadir-hari-ini" class="text-2xl font-bold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center ">
+                        <div class="p-3 rounded-full bg-yellow-100">
+                            <i class="fas fa-book text-yellow-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Jurnal Bulan Ini</p>
+                            <p id="jurnal-bulan-ini" class="text-2xl font-bold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center ">
+                        <div class="p-3 rounded-full bg-purple-100">
+                            <i class="fas fa-star text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Nilai Terinput</p>
+                            <p id="nilai-terinput" class="text-2xl font-bold text-gray-900">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Statistik Absensi</h3>
+                    <div class="h-64">
+                        <canvas id="absensiChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Distribusi Nilai per Mata Pelajaran</h3>
+                    <div class="h-64">
+                        <canvas id="nilaiChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Trend Jurnal Bulanan</h3>
+                    <div class="h-64">
+                        <canvas id="jurnalChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Performa Siswa</h3>
+                    <div class="h-64">
+                        <canvas id="performaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Aktivitas Terbaru</h3>
+                    <div id="aktivitas-terbaru" class="space-y-3">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                            <i class="fas fa-info-circle text-gray-400 mr-3"></i>
+                            <span class="text-gray-600">Belum ada aktivitas hari ini</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 ">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Ringkasan Data</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-gray-600">Total Data Absensi:</span>
+                            <span id="total-absensi" class="font-semibold text-blue-600">0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-gray-600">Total Data Nilai:</span>
+                            <span id="total-nilai" class="font-semibold text-purple-600">0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span class="text-gray-600">Total Data Jurnal:</span>
+                            <span id="total-jurnal" class="font-semibold text-green-600">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Absensi Section -->
+        <section id="absensi-section" class="fade-in hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Absensi Siswa</h2>
+                <p class="text-gray-600">Kelola absensi siswa untuk hari ini</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 ">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter Kelas & Mata Pelajaran</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Kelas</label>
+                        <select id="filter-kelas-absensi" onchange="filterSiswaAbsensi()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Pilih Kelas...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pilih Mata Pelajaran</label>
+                        <select id="filter-mapel-absensi" onchange="filterSiswaAbsensi()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Pilih Mata Pelajaran...</option>
+                            <option value="KKA">KKA</option>
+                            <option value="DGA">DGA</option>
+                            <option value="TATA ARTISTIK">TATA ARTISTIK</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                        <div class="p-3 bg-gray-50 rounded-lg border">
+                            <span id="tanggal-absensi" class="text-gray-900 font-medium"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class Statistics -->
+                <div id="statistik-kelas" class="hidden">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="total-siswa-kelas">0</div>
+                            <div class="text-sm text-blue-600">Total Siswa</div>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-green-600" id="hadir-kelas">0</div>
+                            <div class="text-sm text-green-600">Hadir</div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-yellow-600" id="izin-sakit-kelas">0</div>
+                            <div class="text-sm text-yellow-600">Izin/Sakit</div>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-red-600" id="alpa-kelas">0</div>
+                            <div class="text-sm text-red-600">Alpa</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class Attendance Chart -->
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <h4 class="text-md font-semibold text-gray-900 mb-3">Diagram Absensi Kelas</h4>
+                        <div class="h-48">
+                            <canvas id="kelasAbsensiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student List Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 ">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2 sm:mb-0">
+                        <span id="info-kelas-mapel">Pilih kelas dan mata pelajaran untuk memulai absensi</span>
+                    </h3>
+                    <button onclick="simpanAbsensi()" id="btn-simpan-absensi" class="btn-primary text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i class="fas fa-save mr-2"></i>Simpan Absensi
+                    </button>
+                </div>
+                
+                <div id="daftar-siswa-absensi" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="col-span-full text-center py-8 text-gray-500">
+                        <i class="fas fa-users text-4xl mb-3"></i>
+                        <p>Silakan pilih kelas dan mata pelajaran terlebih dahulu</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nilai Section -->
+        <section id="nilai-section" class="fade-in hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Input Nilai Siswa</h2>
+                <p class="text-gray-600">Kelola nilai tugas, UTS, dan UAS siswa</p>
+            </div>
+
+            <!-- Filter Nilai -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 ">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter Data Nilai</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="filter-kelas-nilai" class="block text-sm font-medium text-gray-700 mb-2">Pilih Kelas</label>
+                        <select id="filter-kelas-nilai" onchange="renderTabelNilai()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Pilih Kelas...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-mapel-nilai" class="block text-sm font-medium text-gray-700 mb-2">Pilih Mata Pelajaran</label>
+                        <select id="filter-mapel-nilai" onchange="renderTabelNilai()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Pilih Mata Pelajaran...</option>
+                            <option value="KKA">KKA</option>
+                            <option value="DGA">DGA</option>
+                            <option value="TATA ARTISTIK">TATA ARTISTIK</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Input Nilai -->
+            <div id="nilai-table-container" class="bg-white rounded-xl shadow-sm hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                    <h3 id="nilai-table-title" class="text-lg font-semibold text-gray-900 mb-2 sm:mb-0">Daftar Nilai Siswa</h3>
+                    <button onclick="simpanSemuaNilai()" class="btn-primary text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition-all">
+                        <i class="fas fa-save mr-2"></i>Simpan Semua Nilai
+                    </button>
+                </div>
+                <div class="overflow-x-auto -mx-6 px-6">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Siswa</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tugas</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UTS</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UAS</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nilai-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Rows will be injected by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jurnal Section -->
+        <section id="jurnal-section" class="fade-in hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Jurnal Guru</h2>
+                <p class="text-gray-600">Catat kegiatan pembelajaran harian</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 ">
+                <form id="form-jurnal" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                            <input type="date" id="tanggal-jurnal" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                            <select id="select-mapel-jurnal" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Mata Pelajaran...</option>
+                                <option value="KKA">KKA</option>
+                                <option value="DGA">DGA</option>
+                                <option value="TATA ARTISTIK">TATA ARTISTIK</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Kelas</label>
+                            <select id="select-kelas-jurnal" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Kelas...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Jurnal</label>
+                        <textarea id="catatan-jurnal" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Tulis catatan kegiatan pembelajaran hari ini..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all">
+                        <i class="fas fa-save mr-2"></i>Simpan Jurnal
+                    </button>
+                </form>
+            </div>
+
+            <!-- Riwayat Jurnal -->
+            <div class="mt-8">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-history text-xl text-gray-500 mr-3"></i>
+                    <h3 class="text-xl font-bold text-gray-900">Riwayat Jurnal</h3>
+                </div>
+                <div id="jurnal-history-container" class="space-y-6 border-l-2 border-blue-200 ml-3 pl-8">
+                    <!-- History items will be injected by JavaScript -->
+                    <div class="text-center py-8 text-gray-500">
+                        <p>Belum ada riwayat jurnal yang tercatat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Laporan Section -->
+        <section id="laporan-section" class="fade-in hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Rekapitulasi Laporan</h2>
+                <p class="text-gray-600">Lihat rekap data absensi, nilai, dan jurnal</p>
+            </div>
+
+            <!-- Filter Laporan -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 ">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter Laporan</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="filter-jenis-laporan" class="block text-sm font-medium text-gray-700 mb-2">Jenis Laporan</label>
+                        <select id="filter-jenis-laporan" onchange="renderLaporan()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Pilih Jenis...</option>
+                            <option value="absensi">Rekap Absensi</option>
+                            <option value="nilai">Rekap Nilai</option>
+                            <option value="jurnal">Rekap Jurnal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-kelas-laporan" class="block text-sm font-medium text-gray-700 mb-2">Kelas</label>
+                        <select id="filter-kelas-laporan" onchange="renderLaporan()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Semua Kelas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filter-mapel-laporan" class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                        <select id="filter-mapel-laporan" onchange="renderLaporan()" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Semua Mapel</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Laporan -->
+            <div id="laporan-table-container" class="bg-white rounded-xl shadow-sm p-6 hidden ">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                    <h3 id="laporan-table-title" class="text-lg font-semibold text-gray-900 mb-2 sm:mb-0">Hasil Laporan</h3>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="downloadLaporan('pdf')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm">
+                            <i class="fas fa-file-pdf mr-2"></i>Unduh PDF
+                        </button>
+                        <button onclick="downloadLaporan('excel')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm">
+                            <i class="fas fa-file-excel mr-2"></i>Unduh Excel
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="laporan-table" class="min-w-full divide-y divide-gray-200">
+                        <!-- Thead and Tbody will be injected by JavaScript -->
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12 pb-24 md:pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-gray-300 mb-2">© <span id="current-year"></span> Jurnal Guru Digital. All rights reserved.</p>
+                <p class="text-gray-400 text-sm mb-4">Developer: <span class="text-blue-400 font-medium">Ari Wijaya</span></p>
+                <button onclick="showCopyrightModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-shield-alt mr-2"></i>Hak Cipta
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Copyright Modal -->
+    <div id="copyright-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-red-600 to-red-800 text-white p-6 rounded-t-xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <h3 class="text-xl font-bold">PERLINDUNGAN HAK CIPTA</h3>
+                    </div>
+                    <button onclick="closeCopyrightModal()" class="text-white hover:text-gray-200 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                        <h4 class="font-bold text-red-800">PERINGATAN KERAS!</h4>
+                    </div>
+                    <p class="text-red-700 text-sm">Aplikasi ini dilindungi oleh Undang-Undang Hak Cipta dan dipantau secara real-time menggunakan teknologi AI.</p>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 class="font-bold text-blue-800 mb-2">📋 INFORMASI KEPEMILIKAN</h4>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>Pemilik:</strong> Bapak Ari Wijaya</p>
+                        <p><strong>Nomor Seri Aplikasi:</strong> <span class="font-mono bg-gray-100 px-2 py-1 rounded">JGD-2025-AW-sbS3KUec-PROTECTED</span></p>
+                        <p><strong>Status:</strong> <span class="text-green-600 font-semibold">Terdaftar & Dilindungi</span></p>
+                        <p><strong>Tanggal Registrasi:</strong> 08 September 2025</p>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 class="font-bold text-yellow-800 mb-3">⚖️ DASAR HUKUM</h4>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <p class="font-semibold">Undang-Undang No. 28 Tahun 2014 tentang Hak Cipta</p>
+                            <ul class="list-disc list-inside ml-4 mt-1 space-y-1">
+                                <li><strong>Pasal 9 Ayat (1):</strong> Pencipta atau Pemegang Hak Cipta memiliki hak eksklusif untuk melaksanakan sendiri Hak Cipta tersebut</li>
+                                <li><strong>Pasal 113 Ayat (3):</strong> Setiap Orang yang dengan tanpa hak dan/atau tanpa izin Pencipta atau pemegang Hak Cipta melakukan pelanggaran hak ekonomi Pencipta</li>
+                                <li><strong>Pasal 113 Ayat (4):</strong> Setiap Orang yang memenuhi unsur sebagaimana dimaksud pada ayat (3) yang dilakukan dalam Bentuk Pembajakan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 class="font-bold text-red-800 mb-3">🚨 SANKSI HUKUM</h4>
+                    <div class="space-y-2 text-sm">
+                        <p><strong>Pidana Penjara:</strong> Maksimal 4 (empat) tahun</p>
+                        <p><strong>Denda:</strong> Maksimal Rp 1.000.000.000,00 (satu miliar rupiah)</p>
+                        <p><strong>Ganti Rugi:</strong> Sesuai kerugian yang diderita pemilik</p>
+                        <p><strong>Tuntutan Perdata:</strong> Penghentian kegiatan komersial</p>
+                    </div>
+                </div>
+
+                <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h4 class="font-bold text-purple-800 mb-3">🤖 SISTEM MONITORING AI</h4>
+                    <div class="space-y-2 text-sm">
+                        <p>✅ Aplikasi ini dipantau 24/7 menggunakan teknologi AI canggih</p>
+                        <p>✅ Setiap penggunaan komersial akan terdeteksi secara otomatis</p>
+                        <p>✅ Data pengguna dan aktivitas tersimpan dalam sistem keamanan</p>
+                        <p>✅ Pelanggaran akan dilaporkan langsung ke pihak berwenang</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 text-white rounded-lg p-4">
+                    <h4 class="font-bold mb-3">📞 KONTAK PEMILIK</h4>
+                    <div class="space-y-1 text-sm">
+                        <p>Untuk izin penggunaan komersial, hubungi:</p>
+                        <p><strong>Bapak Ari Wijaya</strong></p>
+                        <p>Email: ariwijaya56@guru.smk.belajar.id</p>
+                        <p>Telepon: 082134894442</p>
+                    </div>
+                </div>
+
+                <div class="text-center pt-4 border-t">
+                    <p class="text-xs text-gray-500">
+                        Dengan menggunakan aplikasi ini, Anda menyetujui untuk mematuhi semua ketentuan hak cipta yang berlaku.
+                        Pelanggaran akan ditindak sesuai hukum yang berlaku di Republik Indonesia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Mobile -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden ">
+        <div class="grid grid-cols-5 py-2">
+            <button onclick="showSection('dashboard')" class="nav-btn-mobile flex flex-col items-center py-2 px-1 text-blue-600">
+                <i class="fas fa-home text-lg mb-1"></i>
+                <span class="text-xs font-medium">Dashboard</span>
+            </button>
+            <button onclick="showSection('absensi')" class="nav-btn-mobile flex flex-col items-center py-2 px-1 text-gray-600">
+                <i class="fas fa-user-check text-lg mb-1"></i>
+                <span class="text-xs font-medium">Absensi</span>
+            </button>
+            <button onclick="showSection('nilai')" class="nav-btn-mobile flex flex-col items-center py-2 px-1 text-gray-600">
+                <i class="fas fa-star text-lg mb-1"></i>
+                <span class="text-xs font-medium">Nilai</span>
+            </button>
+            <button onclick="showSection('jurnal')" class="nav-btn-mobile flex flex-col items-center py-2 px-1 text-gray-600">
+                <i class="fas fa-book text-lg mb-1"></i>
+                <span class="text-xs font-medium">Jurnal</span>
+            </button>
+            <button onclick="showSection('laporan')" class="nav-btn-mobile flex flex-col items-center py-2 px-1 text-gray-600">
+                <i class="fas fa-chart-bar text-lg mb-1"></i>
+                <span class="text-xs font-medium">Laporan</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden ">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+            <span class="text-gray-700">Memproses...</span>
+        </div>
+    </div>
+
+    <!-- License Key Popup -->
+    <div id="license-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100] hidden ">
+        <div class="bg-white rounded-2xl shadow-xl w-11/12 max-w-md p-8 m-4 ">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Verifikasi Lisensi</h2>
+                <p class="text-gray-600 mt-2">Silakan masukkan kunci lisensi untuk mengaktifkan aplikasi JGD-V4.</p>
+            </div>
+            
+            <div class="mt-8">
+                <div>
+                    <label for="license-key-input" class="sr-only">Kunci Lisensi</label>
+                    <input type="text" id="license-key-input" placeholder="Masukkan Kunci Lisensi Anda" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                </div>
+                <button id="verify-license-btn" class="w-full mt-4 btn-primary text-white font-bold py-3 px-4 rounded-lg hover:shadow-lg transition-all duration-300">
+                    Verifikasi & Aktifkan
+                </button>
+                <p id="license-error" class="text-red-500 text-sm text-center mt-3 h-4"></p>
+            </div>
+
+            <div class="mt-6 text-center text-xs text-gray-400">
+                <p>Aplikasi ini dilindungi hak cipta.</p>
+                <p>Hubungi <span class="font-semibold">Ari Wijaya</span> untuk mendapatkan lisensi.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SERVER LISENSI ---
+        // URL ini digunakan untuk memverifikasi kunci lisensi pengguna.
+        const LICENSE_SERVER_URL = "https://script.google.com/macros/s/AKfycbwPQqYZQAv7RNS3scSQAwj70o11FBcR2DEaPpOcq5eKP3kmv5suBubnt88Yi2736i1j7A/exec";
+        
+        // Global variables
+        let appConfig = {};
+        let siswaData = [];
+        let absensiData = [];
+        let nilaiData = [];
+        let jurnalData = [];
+        let currentAbsensi = {};
+
+        // Chart instances
+        let absensiChart, nilaiChart, jurnalChart, performaChart, kelasAbsensiChart;
+        
+        // Filtered data
+        let filteredSiswa = [];
+        let currentKelas = '';
+        let currentMapel = '';
+
+        // Variabel ini akan diisi setelah lisensi berhasil
+        let SPREADSHEET_ID = '';
+        let SPREADSHEET_URL = ''; // Akan diisi dari data lisensi
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLicense();
+        });
+
+        function checkLicense() {
+            // Coba ambil data lisensi dari localStorage
+            const licenseData = localStorage.getItem('JGD_V4_LICENSE_DATA');
+            if (licenseData) {
+                try {
+                    const parsedData = JSON.parse(licenseData);
+                    // Jika data valid, langsung jalankan aplikasi dengan konfigurasi yang tersimpan
+                    SPREADSHEET_ID = parsedData.spreadsheetId;
+                    SPREADSHEET_URL = parsedData.execUrl;
+                    runApp();
+                } catch (e) {
+                    // Jika data korup, tampilkan popup lisensi
+                    showLicensePopup();
+                }
+            } else {
+                // Jika belum ada data lisensi sama sekali, tampilkan popup
+                showLicensePopup();
+            }
+        }
+
+        function showLicensePopup() {
+            const overlay = document.getElementById('license-overlay');
+            overlay.classList.remove('hidden'); // Tampilkan popup
+
+            const verifyBtn = document.getElementById('verify-license-btn');
+            const errorMsg = document.getElementById('license-error');
+
+            verifyBtn.onclick = async function() {
+                const inputKey = document.getElementById('license-key-input').value.trim();
+                if (!inputKey) {
+                    errorMsg.textContent = 'Kunci lisensi tidak boleh kosong.';
+                    return;
+                }
+
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-auto"></div>';
+                errorMsg.textContent = '';
+
+                try {
+                    const response = await fetch(`${LICENSE_SERVER_URL}?action=verifyLicense&key=${encodeURIComponent(inputKey)}`);
+                    const result = await response.json();
+
+                    if (result.success && result.status === 'aktif') {
+                        // Simpan data lisensi yang valid ke localStorage
+                        const licenseData = {
+                        const licenseDataToStore = {
+                            licenseKey: inputKey, // Simpan juga kuncinya
+                            spreadsheetId: result.id_spreadsheet_jurnal,
+                            execUrl: result.URL_EXEC
+                        };
+                        localStorage.setItem('JGD_V4_LICENSE_DATA', JSON.stringify(licenseData));
+                        localStorage.setItem('JGD_V4_LICENSE_DATA', JSON.stringify(licenseDataToStore));
+
+                        // Set konfigurasi global dan jalankan aplikasi
+                        SPREADSHEET_ID = licenseData.spreadsheetId;
+                        SPREADSHEET_URL = licenseData.execUrl;
+                        SPREADSHEET_ID = licenseDataToStore.spreadsheetId;
+                        SPREADSHEET_URL = licenseDataToStore.execUrl;
+                        
+                        overlay.classList.add('hidden');
+                        runApp();
+                    } else {
+                        errorMsg.textContent = result.message || 'Kunci Lisensi tidak valid atau tidak aktif.';
+                    }
+                } catch (error) {
+                    console.error('License verification error:', error);
+                    errorMsg.textContent = 'Gagal terhubung ke server lisensi. Periksa koneksi internet Anda.';
+                } finally {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = 'Verifikasi & Aktifkan';
+                }
+            };
+        }
+
+
+        function runApp() {
+            // Fungsi ini berisi semua inisialisasi aplikasi yang sudah ada
+            initializeApp();
+            setTanggalHariIni();
+            setCurrentYear();
+            testConnection();
+        }
+
+        // Test connection to Google Apps Script
+        async function testConnection() {
+            try {
+                console.log('Testing connection to:', SPREADSHEET_URL);
+                
+                const response = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=test`, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    console.log('Connection test result:', result); // Log hasil teks mentah
+                    showNotification('✅ Koneksi ke Google Sheets berhasil!', 'success');
+                } else {
+                    console.error('Connection test failed:', response.status, response.statusText); // Log status error
+                    showNotification('⚠️ Koneksi ke Google Sheets bermasalah. Periksa URL Google Apps Script.', 'warning');
+                }
+            } catch (error) {
+                console.error('Connection test error:', error); // Log error fetch
+                showNotification('❌ Tidak dapat terhubung ke Google Sheets. Periksa koneksi internet.', 'error');
+            }
+        }
+
+        async function initializeApp() {
+            showLoading(true);
+            try {
+                await loadConfigurationFromSpreadsheet();
+                await loadSiswaData();
+                await loadAllData();
+                updateDashboard();
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                showNotification('Gagal memuat data aplikasi', 'error');
+            }
+            showLoading(false);
+        }
+
+        // Fungsi untuk membaca konfigurasi langsung dari spreadsheet
+        async function loadConfigurationFromSpreadsheet() {
+            try {
+                // Coba baca langsung dari Google Sheets menggunakan CSV export
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=Konfigurasi`; // Ganti dengan nama sheet yang benar
+                console.log('Trying to load config from CSV:', csvUrl);
+                
+                const response = await fetch(csvUrl);
+                const csvText = await response.text();
+                
+                if (csvText && csvText.trim()) { // Pastikan CSV tidak kosong
+                    const config = parseCSVToConfig(csvText);
+                    console.log('Loaded config from CSV:', config);
+                    
+                    appConfig = {
+                        nama_aplikasi: config.nama_aplikasi || 'Jurnal Guru Digital', // Fallback ke nilai default
+                        nama_sekolah: config.nama_sekolah || 'SMK DR. SOETOMO SURABAYA',
+                        nama_guru: config.nama_guru || 'ARI WIJAYA',
+                        nama_mapel: config.nama_mapel || 'KKA, DGA, TATA ARTISTIK',
+                        url_logo: config.url_logo || 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg',
+                        url_foto_guru: config.url_foto_guru || 'https://res.cloudinary.com/dtehdl404/image/upload/v1755600955/smekdors_fire_20250819_175433_0000_jawwkt.png',
+                        url_exec: config.url_exec || SPREADSHEET_URL
+                    };
+                    
+                    // Update SPREADSHEET_URL jika ada url_exec di konfigurasi (opsional)
+                    if (appConfig.url_exec && appConfig.url_exec.trim() !== '' && appConfig.url_exec !== (SPREADSHEET_URL || LICENSE_SERVER_URL)) {
+                        SPREADSHEET_URL = appConfig.url_exec.trim();
+                        console.log('Updated SPREADSHEET_URL from config:', SPREADSHEET_URL);
+                    }
+                    
+                    updateUIWithConfig();
+                    showNotification('Konfigurasi berhasil dimuat dari spreadsheet', 'success');
+                    return;
+                }
+                
+                // Fallback ke API jika CSV gagal
+                const configResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getData&sheet=Konfigurasi`); // Ganti dengan nama sheet yang benar
+                const configResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getConfig`);
+                const configData = await configResponse.json();
+                
+                if (configData.success && configData.data) {
+                    // Convert array konfigurasi ke object
+                    const config = {};
+                    configData.data.forEach(item => {
+                        if (item.key && item.value) {
+                            config[item.key] = item.value;
+                        }
+                    });
+                    
+                    appConfig = {
+                        nama_aplikasi: config.nama_aplikasi || 'Jurnal Guru Digital', // Fallback ke nilai default
+                        nama_sekolah: config.nama_sekolah || 'SMK DR. SOETOMO SURABAYA',
+                        nama_guru: config.nama_guru || 'ARI WIJAYA',
+                        nama_mapel: config.nama_mapel || 'KKA, DGA, TATA ARTISTIK',
+                        url_logo: config.url_logo || 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg',
+                        url_foto_guru: config.url_foto_guru || 'https://res.cloudinary.com/dtehdl404/image/upload/v1755600955/smekdors_fire_20250819_175433_0000_jawwkt.png',
+                        url_exec: config.url_exec || SPREADSHEET_URL
+                    };
+                    
+                    // Update SPREADSHEET_URL jika ada url_exec di konfigurasi (opsional)
+                    if (appConfig.url_exec && appConfig.url_exec.trim() !== '' && appConfig.url_exec !== (SPREADSHEET_URL || LICENSE_SERVER_URL)) {
+                        SPREADSHEET_URL = appConfig.url_exec.trim();
+                        console.log('Updated SPREADSHEET_URL from config:', SPREADSHEET_URL);
+                    }
+                    
+                    updateUIWithConfig();
+                } else {
+                    throw new Error('Gagal membaca konfigurasi dari spreadsheet');
+                }
+            } catch (error) {
+                console.error('Error loading configuration from spreadsheet:', error);
+                await loadConfiguration(); // Fallback ke method lama
+            }
+        }
+
+        function parseCSVToConfig(csvText) {
+            const lines = csvText.trim().split('\n');
+            const config = {};
+            
+            // Parse setiap baris konfigurasi (A1:B1, A2:B2, dst)
+            for (let i = 0; i < lines.length; i++) { // Mulai dari baris pertama
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const values = parseCSVLine(line);
+                if (values.length >= 2) {
+                    const key = values[0].trim();
+                    const value = values[1].trim();
+                    if (key && value) {
+                        config[key] = value;
+                    }
+                }
+            }
+            
+            return config;
+        }
+
+        async function loadConfiguration() {
+            try {
+                // Pertama, coba ambil konfigurasi dari URL default
+                const response = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getConfig`);
+                const data = await response.json();
+                
+                if (data.success && data.config) {
+                    appConfig = data.config;
+
+                    // Update SPREADSHEET_URL jika ada url_exec di konfigurasi
+                    if (appConfig.url_exec && appConfig.url_exec.trim() !== '') {
+                        SPREADSHEET_URL = appConfig.url_exec.trim();
+                        console.log('Updated SPREADSHEET_URL to:', SPREADSHEET_URL);
+                    }
+                    
+                    updateUIWithConfig();
+                } else {
+                    throw new Error('Invalid configuration response');
+                }
+            } catch (error) {
+                console.error('Error loading configuration:', error);
+                // Use default values if API fails
+                appConfig = {
+                    nama_aplikasi: 'Jurnal Guru Digital',
+                    nama_sekolah: 'SMK DR. SOETOMO SURABAYA',
+                    nama_guru: 'ARI WIJAYA',
+                    nama_mapel: 'KKA, DGA, TATA ARTISTIK',
+                    url_logo: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg',
+                    url_foto_guru: 'https://res.cloudinary.com/dtehdl404/image/upload/v1755600955/smekdors_fire_20250219_175433_0000_jawwkt.png',
+                    url_exec: SPREADSHEET_URL || LICENSE_SERVER_URL
+                };
+                updateUIWithConfig();
+            }
+        }
+
+        function updateUIWithConfig() {
+            // Update desktop header
+            document.getElementById('nama-aplikasi').textContent = appConfig.nama_aplikasi || 'Jurnal Guru Digital';
+            document.getElementById('nama-sekolah').textContent = appConfig.nama_sekolah || 'SMK DR. SOETOMO SURABAYA';
+            document.getElementById('nama-guru').textContent = appConfig.nama_guru || 'ARI WIJAYA';
+            document.getElementById('nama-mapel').textContent = appConfig.nama_mapel || 'KKA, DGA, TATA ARTISTIK';
+            
+            // Update mobile header
+            document.getElementById('nama-aplikasi-mobile').textContent = appConfig.nama_aplikasi || 'Jurnal Guru Digital';
+            document.getElementById('nama-sekolah-mobile').textContent = appConfig.nama_sekolah || 'SMK DR. SOETOMO SURABAYA';
+            document.getElementById('nama-guru-mobile').textContent = appConfig.nama_guru || 'ARI WIJAYA';
+            
+            // Update images
+            if (appConfig.url_logo) {
+                document.getElementById('logo-sekolah').src = appConfig.url_logo;
+                document.getElementById('logo-sekolah-mobile').src = appConfig.url_logo;
+            }
+            
+            if (appConfig.url_foto_guru) {
+                document.getElementById('foto-guru').src = appConfig.url_foto_guru;
+                document.getElementById('foto-guru-mobile').src = appConfig.url_foto_guru;
+            }
+        }
+
+        async function loadSiswaData() {
+            try {
+                // Coba baca langsung dari Google Sheets menggunakan CSV export
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=Siswa`; // Ganti dengan nama sheet yang benar
+                console.log('Trying to load siswa from CSV:', csvUrl);
+                
+                const response = await fetch(csvUrl);
+                const csvText = await response.text();
+                
+                if (csvText && csvText.trim()) {
+                    siswaData = parseCSVToSiswa(csvText);
+                    console.log('Loaded siswa data from CSV:', siswaData);
+                    
+                    if (siswaData.length > 0) {
+                        renderDaftarSiswaAbsensi();
+                        populateSelectOptions(); // Pindahkan ke sini
+                        showNotification(`Berhasil memuat ${siswaData.length} data siswa dari spreadsheet`, 'success');
+                        return;
+                    }
+                }
+                
+                // Fallback ke API jika CSV gagal
+                const apiResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getData&sheet=Siswa`); // Ganti dengan nama sheet yang benar
+                const apiData = await apiResponse.json();
+                
+                if (apiData.success && apiData.data) {
+                    siswaData = apiData.data;
+                    console.log('Loaded siswa data from API:', siswaData);
+                    renderDaftarSiswaAbsensi();
+                    populateSelectOptions(); // Pindahkan ke sini juga untuk fallback
+                    showNotification(`Berhasil memuat ${siswaData.length} data siswa`, 'success');
+                } else {
+                    throw new Error('No data from API');
+                }
+            } catch (error) {
+                console.error('Error loading siswa data:', error);
+                // Use sample data as fallback
+                siswaData = [
+                    { id_siswa: '1', nama_siswa: 'Ahmad Rizki', url_foto_siswa: 'https://via.placeholder.com/60x60/3B82F6/white?text=AR', kelas: 'XII IPA 1' },
+                    { id_siswa: '2', nama_siswa: 'Siti Nurhaliza', url_foto_siswa: 'https://via.placeholder.com/60x60/E91E63/white?text=SN', kelas: 'XII IPA 1' },
+                    { id_siswa: '3', nama_siswa: 'Budi Setiawan', url_foto_siswa: 'https://via.placeholder.com/60x60/4CAF50/white?text=BS', kelas: 'XII IPA 1' }
+                ];
+                renderDaftarSiswaAbsensi();
+                populateSelectOptions(); // Pindahkan ke sini juga untuk data demo
+                showNotification('Menggunakan data siswa demo - periksa koneksi spreadsheet', 'warning');
+            }
+        }
+
+        function parseCSVToSiswa(csvText) {
+            const lines = csvText.trim().split('\n');
+            const siswaArray = [];
+            
+            // Skip header row (index 0)
+            for (let i = 1; i < lines.length; i++) { // Mulai dari baris kedua
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                // Parse CSV line dengan handling untuk quoted values
+                const values = parseCSVLine(line);
+                
+                if (values.length >= 4) {
+                    const siswa = { // Sesuaikan dengan header di spreadsheet
+                        id_siswa: values[0] || (i).toString(),
+                        nama_siswa: values[1] || `Siswa ${i}`,
+                        url_foto_siswa: values[2] || generatePlaceholderImage(values[1] || `S${i}`),
+                        kelas: values[3] || 'XII IPA 1'
+                    };
+                    siswaArray.push(siswa);
+                }
+            }
+            
+            return siswaArray;
+        }
+
+        function parseCSVLine(line) {
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    values.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            values.push(current.trim());
+            return values.map(v => v.replace(/^"|"$/g, '')); // Remove surrounding quotes
+        }
+
+        function generatePlaceholderImage(name) {
+            const colors = ['3B82F6', 'E91E63', '4CAF50', 'FF9800', '9C27B0', 'F44336', '2196F3', '4CAF50'];
+            const colorIndex = name.length % colors.length;
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            return `https://via.placeholder.com/60x60/${colors[colorIndex]}/white?text=${initials}`;
+        }
+
+        async function loadAllData() {
+            try {
+                // Load absensi data
+                const absensiResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getData&sheet=Absensi`); // Ganti dengan nama sheet yang benar
+                const absensiResult = await absensiResponse.json();
+                if (absensiResult.success && absensiResult.data) {
+                    absensiData = absensiResult.data;
+                    console.log('Loaded absensi data:', absensiData.length, 'records');
+                } else {
+                    absensiData = [];
+                }
+
+                // Load nilai data
+                const nilaiResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getData&sheet=Nilai`); // Ganti dengan nama sheet yang benar
+                const nilaiResult = await nilaiResponse.json();
+                if (nilaiResult.success && nilaiResult.data) {
+                    nilaiData = nilaiResult.data;
+                    console.log('Loaded nilai data:', nilaiData.length, 'records');
+                } else {
+                    nilaiData = [];
+                }
+
+                // Load jurnal data
+                const jurnalResponse = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?action=getData&sheet=Jurnal`); // Ganti dengan nama sheet yang benar
+                const jurnalResult = await jurnalResponse.json();
+                if (jurnalResult.success && jurnalResult.data) {
+                    jurnalData = jurnalResult.data;
+                    console.log('Loaded jurnal data:', jurnalData.length, 'records');
+                } else {
+                    jurnalData = [];
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Initialize empty arrays if loading fails
+                absensiData = [];
+                nilaiData = [];
+                jurnalData = [];
+            }
+        }
+
+        function setTanggalHariIni() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('tanggal-absensi').textContent = formatTanggal(today);
+            document.getElementById('tanggal-jurnal').value = today;
+        }
+
+        function formatTanggal(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections first
+            // Show selected section
+            document.getElementById(`${sectionName}-section`).classList.remove('hidden');
+            
+            // Update navigation active state
+            updateNavigationState(sectionName);
+            
+            // Load section-specific data or reset filters
+            if (sectionName === 'laporan') { // Perbaiki logika ini
+                loadLaporanData();
+            }
+            if (sectionName === 'jurnal') { renderJurnalHistory(); }
+        }
+
+        function updateNavigationState(activeSection) {
+            // Desktop navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const section = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                if (section !== activeSection) {
+                    document.getElementById(`${section}-section`).classList.add('hidden'); // Sembunyikan yang tidak aktif
+                }
+
+                btn.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            // Mobile navigation
+            document.querySelectorAll('.nav-btn-mobile').forEach(btn => {
+                btn.classList.remove('text-blue-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            // Set active state
+            const activeDesktopBtn = document.querySelector(`[onclick="showSection('${activeSection}')"].nav-btn`);
+            const activeMobileBtn = document.querySelector(`[onclick="showSection('${activeSection}')"].nav-btn-mobile`);
+            
+            if (activeDesktopBtn) {
+                activeDesktopBtn.classList.remove('text-gray-600');
+                activeDesktopBtn.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+            }
+            
+            if (activeMobileBtn) {
+                activeMobileBtn.classList.remove('text-gray-600');
+                activeMobileBtn.classList.add('text-blue-600');
+            }
+        }
+
+        function filterSiswaAbsensi() {
+            const selectedKelas = document.getElementById('filter-kelas-absensi').value;
+            const selectedMapel = document.getElementById('filter-mapel-absensi').value;
+            
+            currentKelas = selectedKelas;
+            currentMapel = selectedMapel;
+            
+            // Update info display
+            const infoElement = document.getElementById('info-kelas-mapel');
+            const btnSimpan = document.getElementById('btn-simpan-absensi');
+            
+            if (selectedKelas && selectedMapel) {
+                infoElement.textContent = `Absensi ${selectedMapel} - Kelas ${selectedKelas}`;
+                btnSimpan.disabled = false;
+                
+                // Filter siswa by class
+                filteredSiswa = siswaData.filter(siswa => siswa.kelas === selectedKelas);
+                
+                // Show statistics and render students
+                document.getElementById('statistik-kelas').classList.remove('hidden');
+                renderDaftarSiswaAbsensi();
+                updateKelasStatistics();
+                createKelasAbsensiChart();
+            } else {
+                infoElement.textContent = 'Pilih kelas dan mata pelajaran untuk memulai absensi';
+                btnSimpan.disabled = true;
+                document.getElementById('statistik-kelas').classList.add('hidden');
+                
+                // Show placeholder
+                const container = document.getElementById('daftar-siswa-absensi');
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-gray-500">
+                        <i class="fas fa-users text-4xl mb-3"></i>
+                        <p>Silakan pilih kelas dan mata pelajaran terlebih dahulu</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderDaftarSiswaAbsensi() {
+            const container = document.getElementById('daftar-siswa-absensi');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (filteredSiswa.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-gray-500">
+                        <i class="fas fa-users text-4xl mb-3"></i>
+                        <p>Tidak ada siswa di kelas ini</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const cloudColors = ['bg-blue-50', 'bg-purple-50', 'bg-green-50', 'bg-yellow-50', 'bg-pink-50', 'bg-indigo-50', 'bg-teal-50', 'bg-orange-50'];
+            
+            container.innerHTML = filteredSiswa.map((siswa, index) => `
+                <div class="${cloudColors[index % cloudColors.length]} rounded-lg p-4 card-hover border border-white shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <img src="${siswa.url_foto_siswa}" alt="${siswa.nama_siswa}" class="w-12 h-12 rounded-full border-2 border-white shadow-sm">
+                        <div>
+                            <h4 class="font-medium text-gray-900">${siswa.nama_siswa}</h4>
+                            <p class="text-sm text-gray-600">${siswa.kelas}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="setAbsensi('${siswa.id_siswa}', 'Hadir', this)" class="absensi-btn px-3 py-2 rounded-lg text-gray-700 text-sm font-medium transition-all bg-white hover:bg-gray-50 border border-gray-200" data-siswa="${siswa.id_siswa}" data-status="Hadir">
+                            <i class="fas fa-check mr-1"></i>Hadir
+                        </button>
+                        <button onclick="setAbsensi('${siswa.id_siswa}', 'Izin', this)" class="absensi-btn px-3 py-2 rounded-lg text-gray-700 text-sm font-medium transition-all bg-white hover:bg-gray-50 border border-gray-200" data-siswa="${siswa.id_siswa}" data-status="Izin">
+                            <i class="fas fa-clock mr-1"></i>Izin
+                        </button>
+                        <button onclick="setAbsensi('${siswa.id_siswa}', 'Sakit', this)" class="absensi-btn px-3 py-2 rounded-lg text-gray-700 text-sm font-medium transition-all bg-white hover:bg-gray-50 border border-gray-200" data-siswa="${siswa.id_siswa}" data-status="Sakit">
+                            <i class="fas fa-thermometer mr-1"></i>Sakit
+                        </button>
+                        <button onclick="setAbsensi('${siswa.id_siswa}', 'Alpa', this)" class="absensi-btn px-3 py-2 rounded-lg text-gray-700 text-sm font-medium transition-all bg-white hover:bg-gray-50 border border-gray-200" data-siswa="${siswa.id_siswa}" data-status="Alpa">
+                            <i class="fas fa-times mr-1"></i>Alpa
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add CSS for status buttons
+            const style = document.createElement('style');
+            style.textContent = `
+                .absensi-btn-active-hadir { 
+                    background-color: #10B981 !important; 
+                    color: white !important;
+                }
+                .absensi-btn-active-izin { 
+                    background-color: #F59E0B !important; 
+                    color: white !important;
+                }
+                .absensi-btn-active-sakit { 
+                    background-color: #EF4444 !important; 
+                    color: white !important;
+                }
+                .absensi-btn-active-alpa { 
+                    background-color: #6B7280 !important; 
+                    color: white !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function updateKelasStatistics() {
+            if (!currentKelas) return;
+            
+            const totalSiswa = filteredSiswa.length;
+            document.getElementById('total-siswa-kelas').textContent = totalSiswa;
+            
+            // Count current attendance status
+            const hadirCount = Object.values(currentAbsensi).filter(status => status === 'Hadir').length;
+            const izinSakitCount = Object.values(currentAbsensi).filter(status => status === 'Izin' || status === 'Sakit').length;
+            const alpaCount = Object.values(currentAbsensi).filter(status => status === 'Alpa').length;
+            
+            document.getElementById('hadir-kelas').textContent = hadirCount;
+            document.getElementById('izin-sakit-kelas').textContent = izinSakitCount;
+            document.getElementById('alpa-kelas').textContent = alpaCount;
+        }
+
+        function createKelasAbsensiChart() {
+            const ctx = document.getElementById('kelasAbsensiChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (kelasAbsensiChart) {
+                kelasAbsensiChart.destroy();
+            }
+            
+            // Get current attendance data
+            const hadirCount = Object.values(currentAbsensi).filter(status => status === 'Hadir').length;
+            const izinCount = Object.values(currentAbsensi).filter(status => status === 'Izin').length;
+            const sakitCount = Object.values(currentAbsensi).filter(status => status === 'Sakit').length;
+            const alpaCount = Object.values(currentAbsensi).filter(status => status === 'Alpa').length;
+            const belumAbsenCount = filteredSiswa.length - Object.keys(currentAbsensi).length;
+            
+            const labels = ['Hadir', 'Izin', 'Sakit', 'Alpa', 'Belum Absen'];
+            const data = [hadirCount, izinCount, sakitCount, alpaCount, belumAbsenCount];
+            const colors = ['#10B981', '#F59E0B', '#EF4444', '#6B7280', '#E5E7EB'];
+            
+            kelasAbsensiChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function setAbsensi(idSiswa, status, clickedButton) {
+            currentAbsensi[idSiswa] = status;
+            
+            // Find all buttons for this student
+            const allButtonsForStudent = document.querySelectorAll(`[data-siswa="${idSiswa}"]`);
+            
+            // Remove active state from all buttons for this student
+            allButtonsForStudent.forEach(btn => {
+                btn.classList.remove('absensi-btn-active-hadir', 'absensi-btn-active-izin', 'absensi-btn-active-sakit', 'absensi-btn-active-alpa');
+                btn.classList.add('bg-white', 'hover:bg-gray-50', 'text-gray-700', 'border', 'border-gray-200');
+                btn.classList.remove('text-white');
+            });
+            
+            // Add active state to clicked button
+            const activeClass = `absensi-btn-active-${status.toLowerCase()}`;
+            clickedButton.classList.add(activeClass); // Tambahkan kelas aktif
+            clickedButton.classList.remove('bg-white', 'hover:bg-gray-50', 'text-gray-700', 'border', 'border-gray-200');
+            
+            // Update statistics and chart
+            updateKelasStatistics();
+            createKelasAbsensiChart();
+        }
+
+        function getSiswaName(idSiswa) {
+            const siswa = siswaData.find(s => s.id_siswa == idSiswa);
+            return siswa ? siswa.nama_siswa : 'Siswa';
+        }
+
+        async function simpanAbsensi() {
+            if (Object.keys(currentAbsensi).length === 0) {
+                showNotification('Belum ada absensi yang diinput', 'warning');
+                return;
+            }
+            
+            if (!currentKelas || !currentMapel) {
+                showNotification('Pilih kelas dan mata pelajaran terlebih dahulu', 'warning');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                
+                // Prepare data for each student with id_absensi
+                const absensiArray = Object.entries(currentAbsensi).map(([idSiswa, status], index) => {
+                    const timestamp = Date.now();
+                    const id_absensi = `ABS_${timestamp}_${index + 1}`;
+                    
+                    return {
+                        id_absensi: id_absensi,
+                        tanggal: today,
+                        id_siswa: idSiswa,
+                        status: status
+                    };
+                });
+                
+                console.log('Sending absensi data to spreadsheet:', absensiArray);
+                console.log('Using URL:', SPREADSHEET_URL || LICENSE_SERVER_URL);
+                
+                // Try multiple request methods for better compatibility
+                let response;
+                let result;
+                
+                // Method 1: Standard POST request
+                try {
+                    response = await fetch(SPREADSHEET_URL || LICENSE_SERVER_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'saveAbsensi',
+                            data: absensiArray
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    result = await response.json();
+                } catch (fetchError) {
+                    console.log('Standard POST failed, trying alternative method:', fetchError);
+                    
+                    // Method 2: GET request with parameters (fallback)
+                    const params = new URLSearchParams({
+
+                // Menggunakan metode POST yang benar untuk mengirim data
+                const response = await fetch(SPREADSHEET_URL || LICENSE_SERVER_URL, {
+                    method: 'POST',
+                    mode: 'cors', // mode cors penting untuk request cross-origin
+                    headers: {
+                        // 'Content-Type' header tidak diperlukan saat menggunakan redirect
+                        // 'Content-Type': 'text/plain;charset=utf-8', 
+                    },
+                    // Body harus berupa string
+                    body: JSON.stringify({
+                        action: 'saveAbsensi',
+                        data: JSON.stringify(absensiArray)
+                        data: absensiArray
+                    });
+                });
+                const result = await response.json();
+                    
+                    response = await fetch(`${SPREADSHEET_URL || LICENSE_SERVER_URL}?${params}`, {
+                        method: 'GET',
+                        mode: 'cors'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    result = await response.json();
+                }
+                
+                console.log('Absensi save result:', result);
+                
+                if (result && result.success) {
+                    showSuccessPopup(`Absensi ${currentMapel} kelas ${currentKelas} berhasil disimpan!`, `${Object.keys(currentAbsensi).length} siswa telah diabsen`);
+                    currentAbsensi = {};
+                    
+                    // Reset visual feedback
+                    document.querySelectorAll('.absensi-btn').forEach(btn => {
+                        btn.classList.remove('absensi-btn-active-hadir', 'absensi-btn-active-izin', 'absensi-btn-active-sakit', 'absensi-btn-active-alpa');
+                        btn.classList.add('bg-white', 'hover:bg-gray-50', 'text-gray-700', 'border', 'border-gray-200');
+                        btn.classList.remove('text-white');
+                    });
+                    
+                    // Update statistics and chart
+                    updateKelasStatistics();
+                    createKelasAbsensiChart();
+                    await loadAllData();
+                    updateDashboard();
+                } else {
+                    const errorMsg = result?.message || result?.error || 'Response tidak valid dari server';
+                    showNotification(`❌ Gagal menyimpan ke database: ${errorMsg}`, 'error');
+                    console.error('Save failed with result:', result);
+                }
+            } catch (error) {
+                console.error('Error saving absensi:', error);
+                
+                let errorMessage = 'Koneksi ke database gagal';
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Tidak dapat terhubung ke Google Sheets. Periksa koneksi internet dan URL Google Apps Script.';
+                } else if (error.message.includes('CORS')) {
+                    errorMessage = 'Masalah CORS. Pastikan Google Apps Script sudah di-deploy dengan akses publik.';
+                } else if (error.message.includes('HTTP')) {
+                    errorMessage = `Server error: ${error.message}`;
+                } else {
+                    errorMessage = `Error: ${error.message}`;
+                }
+                
+                showNotification(`❌ ${errorMessage}`, 'error');
+            }
+            
+            showLoading(false);
+        }
+
+        function populateSelectOptions() {
+            // Ambil semua elemen select yang perlu diisi
+            const selectKelasAbsensi = document.getElementById('filter-kelas-absensi');
+            const selectKelasNilai = document.getElementById('filter-kelas-nilai');
+            const selectKelasJurnal = document.getElementById('select-kelas-jurnal');
+            const selectKelasLaporan = document.getElementById('filter-kelas-laporan');
+            
+            const selectMapelAbsensi = document.getElementById('filter-mapel-absensi');
+            const selectMapelNilai = document.getElementById('filter-mapel-nilai');
+            const selectMapelJurnal = document.getElementById('select-mapel-jurnal');
+            const selectMapelLaporan = document.getElementById('filter-mapel-laporan');
+
+            // Hapus opsi yang ada (kecuali yang pertama)
+            [selectKelasAbsensi, selectKelasNilai, selectKelasJurnal, selectKelasLaporan, selectMapelAbsensi, selectMapelNilai, selectMapelJurnal, selectMapelLaporan].forEach(sel => {
+                sel.innerHTML = `<option value="">${sel.id.includes('kelas') ? 'Pilih Kelas...' : 'Pilih Mapel...'}</option>`;
+            });
+
+            // Isi Opsi Kelas
+            const uniqueKelas = [...new Set(siswaData.map(siswa => siswa.kelas))];
+            uniqueKelas.sort().forEach(kelas => {
+                [selectKelasAbsensi, selectKelasNilai, selectKelasJurnal, selectKelasLaporan].forEach(sel => {
+                    const option = new Option(kelas, kelas);
+                    sel.add(option);
+                });
+            });
+
+            // Isi Opsi Mata Pelajaran dari Konfigurasi
+            if (appConfig.nama_mapel) {
+                const mapelArray = appConfig.nama_mapel.split(',').map(m => m.trim());
+                mapelArray.forEach(mapel => {
+                    if (mapel) { // Pastikan bukan string kosong
+                        [selectMapelAbsensi, selectMapelNilai, selectMapelJurnal, selectMapelLaporan].forEach(sel => {
+                            const option = new Option(mapel, mapel);
+                            sel.add(option);
+                        });
+                    }
+                });
+            }
+        }
+
+        // Form submissions
+        
+        function renderTabelNilai() {
+            const kelas = document.getElementById('filter-kelas-nilai').value;
+            const mapel = document.getElementById('filter-mapel-nilai').value;
+            const tableContainer = document.getElementById('nilai-table-container');
+            const tableBody = document.getElementById('nilai-table-body');
+
+            if (!kelas || !mapel) {
+                tableContainer.classList.add('hidden');
+                return;
+            }
+
+            tableContainer.classList.remove('hidden');
+            document.getElementById('nilai-table-title').textContent = `Input Nilai ${mapel} - Kelas ${kelas}`;
+
+            const siswaDiKelas = siswaData.filter(s => s.kelas === kelas);
+            if (siswaDiKelas.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-gray-500">Tidak ada siswa di kelas ini.</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = siswaDiKelas.map(siswa => `
+                <tr class="hover:bg-gray-50" data-id-siswa="${siswa.id_siswa}">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded-full" src="${siswa.url_foto_siswa}" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${siswa.nama_siswa}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4"><input type="number" min="0" max="100" class="nilai-tugas w-20 p-2 border border-gray-300 rounded-md"></td>
+                    <td class="px-6 py-4"><input type="number" min="0" max="100" class="nilai-uts w-20 p-2 border border-gray-300 rounded-md"></td>
+                    <td class="px-6 py-4"><input type="number" min="0" max="100" class="nilai-uas w-20 p-2 border border-gray-300 rounded-md"></td>
+                    <td class="px-6 py-4"><input type="text" class="keterangan-nilai w-full p-2 border border-gray-300 rounded-md" placeholder="Opsional"></td>
+                </tr>
+            `).join('');
+        }
+
+        async function simpanSemuaNilai() {
+            const mapel = document.getElementById('filter-mapel-nilai').value;
+            const tableRows = document.querySelectorAll('#nilai-table-body tr');
+            const dataNilaiArray = [];
+
+            tableRows.forEach(row => {
+                const id_siswa = row.dataset.idSiswa;
+                const tugas = row.querySelector('.nilai-tugas').value;
+                const uts = row.querySelector('.nilai-uts').value;
+                const uas = row.querySelector('.nilai-uas').value;
+                const keterangan = row.querySelector('.keterangan-nilai').value;
+
+                // Hanya kirim data siswa yang diisi nilainya
+                if (id_siswa && (tugas || uts || uas || keterangan)) {
+                    dataNilaiArray.push({ id_siswa, mata_pelajaran: mapel, tugas, uts, uas, keterangan });
+                }
+            });
+
+            if (dataNilaiArray.length === 0) {
+                showNotification('Tidak ada data nilai yang diisi untuk disimpan.', 'warning');
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                const response = await fetch(SPREADSHEET_URL || LICENSE_SERVER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'saveNilai', data: dataNilaiArray })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification(`✅ Berhasil menyimpan ${dataNilaiArray.length} data nilai ke database!`, 'success');
+                    renderTabelNilai(); // Reset tabel
+                    await loadAllData();
+                    updateDashboard();
+                } else {
+                    showNotification(`❌ Gagal menyimpan nilai ke database: ${result.message || 'Error tidak diketahui'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving nilai:', error);
+                showNotification(`❌ Koneksi ke database gagal: ${error.message}`, 'error');
+            }
+
+            showLoading(false);
+        }
+
+        document.getElementById('form-jurnal').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                tanggal: document.getElementById('tanggal-jurnal').value,
+                mata_pelajaran: document.getElementById('select-mapel-jurnal').value,
+                kelas: document.getElementById('select-kelas-jurnal').value,
+                catatan: document.getElementById('catatan-jurnal').value
+            };
+            
+            if (!formData.tanggal || !formData.mata_pelajaran || !formData.kelas || !formData.catatan) {
+                showNotification('Mohon lengkapi semua field', 'warning');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                console.log('Sending jurnal data:', formData);
+                
+                const response = await fetch(SPREADSHEET_URL || LICENSE_SERVER_URL, {
+                    method: 'POST',
+                    headers: { // Pastikan header benar
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveJurnal',
+                        data: formData
+                    })
+                });
+                
+                const result = await response.json();
+                console.log('Jurnal save result:', result);
+                
+                if (result.success) {
+                    showNotification(`✅ Jurnal ${formData.mata_pelajaran} kelas ${formData.kelas} berhasil disimpan!`, 'success');
+                    this.reset();
+                    setTanggalHariIni();
+                    await loadAllData();
+                    renderJurnalHistory();
+                    updateDashboard();
+                } else {
+                    showNotification(`❌ Gagal menyimpan jurnal ke database: ${result.message || 'Error tidak diketahui'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving jurnal:', error);
+                showNotification(`❌ Koneksi ke database gagal: ${error.message}`, 'error');
+                // Don't reset form on error - let user try again
+            }
+            
+            showLoading(false);
+        });
+
+        function updateDashboard() {
+            // Update statistics
+            document.getElementById('total-siswa').textContent = siswaData.length;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const hadirHariIni = absensiData.filter(a => a.tanggal === today && a.status === 'Hadir').length; // Filter berdasarkan tanggal hari ini
+            document.getElementById('hadir-hari-ini').textContent = hadirHariIni;
+            
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            const jurnalBulanIni = jurnalData.filter(j => {
+                const jurnalDate = new Date(j.tanggal);
+                return jurnalDate.getMonth() + 1 === currentMonth && jurnalDate.getFullYear() === currentYear;
+            }).length;
+            document.getElementById('jurnal-bulan-ini').textContent = jurnalBulanIni;
+            
+            document.getElementById('nilai-terinput').textContent = nilaiData.length;
+            
+            // Update data summary
+            updateDataSummary();
+            
+            // Update recent activities
+            updateRecentActivities();
+            
+            // Update charts
+            updateCharts();
+        }
+
+        function updateCharts() {
+            createAbsensiChart();
+            createNilaiChart();
+            createJurnalChart();
+            createPerformaChart();
+        }
+
+        function createAbsensiChart() {
+            const ctx = document.getElementById('absensiChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (absensiChart) {
+                absensiChart.destroy();
+            }
+            
+            // Calculate absensi statistics
+            const absensiStats = {};
+            absensiData.forEach(a => {
+                absensiStats[a.status] = (absensiStats[a.status] || 0) + 1;
+            });
+            
+            const labels = Object.keys(absensiStats).length > 0 ? Object.keys(absensiStats) : ['Hadir', 'Izin', 'Sakit', 'Alpa'];
+            const data = labels.map(label => absensiStats[label] || 0); // Pastikan data tidak undefined
+            const colors = ['#10B981', '#F59E0B', '#EF4444', '#6B7280'];
+            
+            absensiChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createNilaiChart() {
+            const ctx = document.getElementById('nilaiChart').getContext('2d');
+            
+            if (nilaiChart) {
+                nilaiChart.destroy();
+            }
+            
+            // Calculate nilai per mata pelajaran
+            const nilaiStats = {};
+            nilaiData.forEach(n => {
+                if (!nilaiStats[n.mata_pelajaran]) {
+                    nilaiStats[n.mata_pelajaran] = [];
+                }
+                if (n.tugas) nilaiStats[n.mata_pelajaran].push(parseInt(n.tugas));
+                if (n.uts) nilaiStats[n.mata_pelajaran].push(parseInt(n.uts));
+                if (n.uas) nilaiStats[n.mata_pelajaran].push(parseInt(n.uas));
+            });
+            
+            const labels = Object.keys(nilaiStats).length > 0 ? Object.keys(nilaiStats) : ['KKA', 'DGA', 'TATA ARTISTIK'];
+            const avgData = labels.map(label => { // Hitung rata-rata
+                const values = nilaiStats[label] || [75, 80, 85]; // Sample data
+                return values.length > 0 ? Math.round(values.reduce((a, b) => a + b, 0) / values.length) : 0;
+            });
+            
+            nilaiChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Rata-rata Nilai',
+                        data: avgData,
+                        backgroundColor: ['#3B82F6', '#8B5CF6', '#10B981'],
+                        borderColor: ['#1D4ED8', '#7C3AED', '#059669'],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: '#F3F4F6'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function createJurnalChart() {
+            const ctx = document.getElementById('jurnalChart').getContext('2d');
+            
+            if (jurnalChart) {
+                jurnalChart.destroy();
+            }
+            
+            // Calculate jurnal per month for last 6 months
+            const months = [];
+            const jurnalCounts = [];
+            const currentDate = new Date();
+            
+            for (let i = 5; i >= 0; i--) {
+                const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+                const monthName = date.toLocaleDateString('id-ID', { month: 'short' });
+                months.push(monthName);
+                
+                const count = jurnalData.filter(j => {
+                    const jurnalDate = new Date(j.tanggal);
+                    return jurnalDate.getMonth() === date.getMonth() && jurnalDate.getFullYear() === date.getFullYear();
+                }).length;
+                
+                jurnalCounts.push(count || Math.floor(Math.random() * 10) + 5); // Sample data if no real data
+            } // Perbaiki loop
+            
+            jurnalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Jumlah Jurnal',
+                        data: jurnalCounts,
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#10B981',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#F3F4F6'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPerformaChart() {
+            const ctx = document.getElementById('performaChart').getContext('2d');
+            
+            if (performaChart) {
+                performaChart.destroy();
+            }
+            
+            // Calculate performance metrics
+            const performanceData = {
+                'Kehadiran': 0,
+                'Nilai Rata-rata': 0,
+                'Jurnal Aktif': 0,
+                'Produktivitas': 0
+            };
+            
+            // Calculate attendance percentage
+            const totalAbsensi = absensiData.length;
+            const hadirCount = absensiData.filter(a => a.status === 'Hadir').length; // Hitung hanya yang hadir
+            performanceData['Kehadiran'] = totalAbsensi > 0 ? Math.round((hadirCount / totalAbsensi) * 100) : 85;
+            
+            // Calculate average grade
+            const allGrades = [];
+            nilaiData.forEach(n => {
+                if (n.tugas) allGrades.push(parseInt(n.tugas));
+                if (n.uts) allGrades.push(parseInt(n.uts));
+                if (n.uas) allGrades.push(parseInt(n.uas));
+            });
+            performanceData['Nilai Rata-rata'] = allGrades.length > 0 ? Math.round(allGrades.reduce((a, b) => a + b, 0) / allGrades.length) : 78;
+            
+            // Journal activity (this month vs last month)
+            const currentMonth = new Date().getMonth();
+            const thisMonthJurnal = jurnalData.filter(j => new Date(j.tanggal).getMonth() === currentMonth).length; // Hitung jurnal bulan ini
+            performanceData['Jurnal Aktif'] = Math.min(thisMonthJurnal * 10, 100) || 65;
+            
+            // Overall productivity
+            performanceData['Produktivitas'] = Math.round((performanceData['Kehadiran'] + performanceData['Nilai Rata-rata'] + performanceData['Jurnal Aktif']) / 3);
+            
+            const labels = Object.keys(performanceData);
+            const data = Object.values(performanceData);
+            
+            performaChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Performa (%)',
+                        data: data,
+                        borderColor: '#8B5CF6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#8B5CF6',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: '#F3F4F6'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function setCurrentYear() {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        }
+
+        function showCopyrightModal() {
+            document.getElementById('copyright-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCopyrightModal() {
+            document.getElementById('copyright-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('copyright-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCopyrightModal();
+            }
+        });
+
+        function updateDataSummary() {
+            // Update total data counts
+            document.getElementById('total-absensi').textContent = absensiData.length;
+            document.getElementById('total-nilai').textContent = nilaiData.length;
+            document.getElementById('total-jurnal').textContent = jurnalData.length;
+        }
+
+        function updateRecentActivities() {
+            const container = document.getElementById('aktivitas-terbaru');
+            const today = new Date().toISOString().split('T')[0];
+            
+            const activities = [];
+            
+            // Recent absensi
+            const todayAbsensi = absensiData.filter(a => a.tanggal === today);
+            if (todayAbsensi.length > 0) {
+                activities.push({
+                    icon: 'fas fa-user-check',
+                    text: `${todayAbsensi.length} siswa telah diabsen hari ini`,
+                    color: 'text-green-600'
+                });
+            }
+            
+            // Recent jurnal
+            const todayJurnal = jurnalData.filter(j => j.tanggal === today);
+            if (todayJurnal.length > 0) {
+                activities.push({
+                    icon: 'fas fa-book',
+                    text: `${todayJurnal.length} jurnal ditambahkan hari ini`,
+                    color: 'text-blue-600'
+                });
+            }
+            
+            // Recent nilai
+            const recentNilai = nilaiData.slice(-3);
+            recentNilai.forEach(nilai => {
+                const siswa = siswaData.find(s => s.id_siswa == nilai.id_siswa);
+                if (siswa) {
+                    activities.push({
+                        icon: 'fas fa-star',
+                        text: `Nilai ${nilai.mata_pelajaran} untuk ${siswa.nama_siswa} telah diinput`,
+                        color: 'text-purple-600'
+                    });
+                }
+            });
+            
+            if (activities.length === 0) {
+                container.innerHTML = `
+                    <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                        <i class="fas fa-info-circle text-gray-400 mr-3"></i>
+                        <span class="text-gray-600">Belum ada aktivitas hari ini</span>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = activities.slice(0, 5).map(activity => `
+                    <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                        <i class="${activity.icon} ${activity.color} mr-3"></i>
+                        <span class="text-gray-700">${activity.text}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function loadLaporanData() {
+            // Populate mapel filter for laporan
+            const selectMapel = document.getElementById('filter-mapel-laporan');
+            selectMapel.innerHTML = '<option value="">Semua Mapel</option>';
+            const uniqueMapel = [...new Set(appConfig.nama_mapel.split(',').map(m => m.trim()))];
+            uniqueMapel.forEach(mapel => {
+                const option = document.createElement('option');
+                option.value = mapel;
+                option.textContent = mapel;
+                selectMapel.appendChild(option);
+            });
+            renderLaporan();
+        }
+
+        function renderLaporan() {
+            const jenis = document.getElementById('filter-jenis-laporan').value;
+            const kelas = document.getElementById('filter-kelas-laporan').value;
+            const mapel = document.getElementById('filter-mapel-laporan').value;
+            const tableContainer = document.getElementById('laporan-table-container');
+            const table = document.getElementById('laporan-table');
+            const title = document.getElementById('laporan-table-title');
+
+            if (!jenis) {
+                tableContainer.classList.add('hidden');
+                return;
+            }
+
+            tableContainer.classList.remove('hidden');
+            let headers = [];
+            let data = [];
+            let titleText = `Laporan ${jenis.charAt(0).toUpperCase() + jenis.slice(1)}`;
+
+            if (jenis === 'absensi') {
+                headers = ['Tanggal', 'Nama Siswa', 'Kelas', 'Status'];
+                let filteredData = absensiData;
+                if (kelas) filteredData = filteredData.filter(item => getSiswaKelas(item.id_siswa) === kelas); // Filter by kelas
+                // Absensi tidak difilter by mapel
+                data = filteredData.map(item => [item.tanggal, getSiswaName(item.id_siswa), getSiswaKelas(item.id_siswa), item.status]);
+            } else if (jenis === 'nilai') {
+                headers = ['Nama Siswa', 'Kelas', 'Mapel', 'Tugas', 'UTS', 'UAS', 'Keterangan'];
+                let filteredData = nilaiData;
+                if (kelas) filteredData = filteredData.filter(item => getSiswaKelas(item.id_siswa) === kelas); // Filter by kelas
+                if (mapel) filteredData = filteredData.filter(item => item.mata_pelajaran === mapel); // Filter by mapel
+                data = filteredData.map(item => [getSiswaName(item.id_siswa), getSiswaKelas(item.id_siswa), item.mata_pelajaran, item.tugas, item.uts, item.uas, item.keterangan]);
+            } else if (jenis === 'jurnal') {
+                headers = ['Tanggal', 'Kelas', 'Mapel', 'Catatan'];
+                let filteredData = jurnalData;
+                if (kelas) filteredData = filteredData.filter(item => item.kelas === kelas); // Filter by kelas
+                if (mapel) filteredData = filteredData.filter(item => item.mata_pelajaran === mapel);
+                data = filteredData.map(item => [item.tanggal, item.kelas, item.mata_pelajaran, item.catatan]);
+            }
+
+            title.textContent = titleText;
+            table.innerHTML = `
+                <thead class="bg-gray-50">
+                    <tr>
+                        ${headers.map(h => `<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${h}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    ${data.length > 0 ? data.map(row => `
+                        <tr>
+                            ${row.map(cell => `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${cell || '-'}</td>`).join('')}
+                        </tr>
+                    `).join('') : `<tr><td colspan="${headers.length}" class="text-center py-4 text-gray-500">Tidak ada data yang cocok dengan filter.</td></tr>`}
+                </tbody>
+            `;
+        }
+
+        function getSiswaKelas(idSiswa) {
+            const siswa = siswaData.find(s => s.id_siswa == idSiswa);
+            return siswa ? siswa.kelas : 'N/A';
+        }
+
+        function downloadLaporan(format) {
+            const { jsPDF } = window.jspdf; // Pastikan jsPDF dimuat
+            const jenis = document.getElementById('filter-jenis-laporan').value;
+            if (!jenis) {
+                showNotification('Pilih jenis laporan terlebih dahulu', 'warning');
+                return;
+            }
+
+            const table = document.getElementById('laporan-table');
+            const headers = [...table.querySelectorAll('thead th')].map(th => th.textContent);
+            const body = [...table.querySelectorAll('tbody tr')].map(tr => [...tr.querySelectorAll('td')].map(td => td.textContent));
+            
+            const title = document.getElementById('laporan-table-title').textContent;
+            const filename = `${title.replace(/ /g, '_')}_${new Date().toISOString().split('T')[0]}`;
+
+            if (format === 'excel') {
+                const data = [headers, ...body];
+                const csvContent = data.map(row => row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(',')).join('\n');
+                downloadCSV(csvContent, `${filename}.csv`);
+            } else if (format === 'pdf') {
+                const doc = new jsPDF();
+                doc.autoTable({
+                    head: [headers],
+                    body: body,
+                    didDrawPage: function (data) {
+                        // Header
+                        doc.setFontSize(18);
+                        doc.setTextColor(40);
+                        doc.text(title, data.settings.margin.left, 22);
+                        // Footer
+                        const pageCount = doc.internal.getNumberOfPages();
+                        doc.setFontSize(10);
+                        doc.text(`Halaman ${data.pageNumber} dari ${pageCount}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+                    },
+                    margin: { top: 30 }
+                });
+                doc.save(`${filename}.pdf`);
+                showNotification(`File ${filename}.pdf berhasil dibuat`, 'success');
+            }
+        }
+
+        function renderJurnalHistory() {
+            const container = document.getElementById('jurnal-history-container');
+            if (jurnalData.length === 0) {
+                container.innerHTML = `
+                    <div class="relative">
+                        <div class="absolute -left-[38px] top-1 h-4 w-4 bg-gray-300 rounded-full border-4 border-white"></div>
+                        <p class="text-gray-500">Belum ada riwayat jurnal yang tercatat.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort data by date, newest first
+            const sortedJurnal = [...jurnalData].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+            container.innerHTML = sortedJurnal.map(jurnal => `
+                <div class="relative fade-in">
+                    <!-- Timeline Dot -->
+                    <div class="absolute -left-[38px] top-1 h-4 w-4 bg-blue-500 rounded-full border-4 border-white"></div>
+                    
+                    <!-- Timeline Card -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2 ">
+                            <div class="font-semibold text-blue-800">${jurnal.mata_pelajaran} - Kelas ${jurnal.kelas}</div>
+                            <div class="text-sm text-blue-600 font-medium">${formatTanggal(jurnal.tanggal)}</div>
+                        </div>
+                        <p class="text-gray-700">
+                            ${jurnal.catatan}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Download functions
+        function generateCSV(data, headers) {
+            if (data.length === 0) return '';
+            
+            const csvRows = [];
+            csvRows.push(headers.join(','));
+            
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    const value = row[header] || '';
+                    return `"${value.toString().replace(/"/g, '""')}"`;
+                });
+                csvRows.push(values.join(','));
+            });
+            
+            return csvRows.join('\n');
+        }
+
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showNotification(`File ${filename} berhasil diunduh`, 'success');
+            }
+        }
+
+        // Utility functions
+        function showLoading(show) {
+            const overlay = document.getElementById('loading-overlay');
+            if (show) {
+                overlay.classList.remove('hidden');
+            } else {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function showSuccessPopup(title, message) {
+            // Create popup element
+            const popup = document.createElement('div');
+            popup.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            popup.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform scale-0 transition-all duration-500 ease-out">
+                    <div class="p-8 text-center">
+                        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6 animate-bounce">
+                            <i class="fas fa-check text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">${title}</h3>
+                        <p class="text-gray-600 mb-6">${message}</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                        </div>
+                        <button onclick="closeSuccessPopup()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+                            <i class="fas fa-thumbs-up mr-2"></i>Mantap!
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            
+            // Animate in
+            setTimeout(() => {
+                popup.querySelector('.bg-white').classList.remove('scale-0');
+                popup.querySelector('.bg-white').classList.add('scale-100');
+            }, 100);
+            
+            // Auto close after 3 seconds
+            setTimeout(() => {
+                closeSuccessPopup();
+            }, 3000);
+            
+            // Store reference for closing
+            window.currentSuccessPopup = popup;
+        }
+
+        function closeSuccessPopup() {
+            const popup = window.currentSuccessPopup;
+            if (popup) {
+                popup.querySelector('.bg-white').classList.remove('scale-100');
+                popup.querySelector('.bg-white').classList.add('scale-0');
+                
+                setTimeout(() => {
+                    document.body.removeChild(popup);
+                    document.body.style.overflow = 'auto';
+                    window.currentSuccessPopup = null;
+                }, 300);
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-white font-medium transform transition-all duration-300 translate-x-full`;
+            
+            switch (type) {
+                case 'success':
+                    notification.classList.add('bg-green-500');
+                    break;
+                case 'error':
+                    notification.classList.add('bg-red-500');
+                    break;
+                case 'warning':
+                    notification.classList.add('bg-yellow-500');
+                    break;
+                default:
+                    notification.classList.add('bg-blue-500');
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97bbc5eaf7959ccb',t:'MTc1NzMwNjQ4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
